@@ -17,4 +17,17 @@ def generate_bars(number_bars):
     matplotlib.pyplot.show()
 
 
+def bubble_sort(input_list):
+    list_length = len(input_list)
+    # Traverse through all list elements
+    for i in range(list_length):
+        # When the last elements are in place we ignore them (list_length - i - 1)
+        for j in range(0, list_length - i - 1):
+            # Traverse the list from 0 to list_length-i-1, swap if the element found is greater than the next element
+            if input_list[j] > input_list[j + 1]:
+                input_list[j], input_list[j + 1] = input_list[j + 1], input_list[j]
+                return input_list  # We will return only one iteration of the sort, so we can call this multiple times
+                # to act as our animation frames.
+
+
 generate_bars(10)
