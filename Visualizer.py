@@ -21,7 +21,7 @@ def bubble_sort(input_list):
 
 # Initialize figure and axes
 fig, ax = plt.subplots()
-bars = ax.bar(range(len(generate_bars(25))), generate_bars(25))
+bars = ax.bar(range(len(generate_bars(99))), generate_bars(99-))
 
 
 # Function to update bars for each frame of the animation
@@ -32,7 +32,7 @@ def update(input_list):
 
 
 # Create animation
-anim = animation.FuncAnimation(fig, update, frames=bubble_sort(generate_bars(25)), interval=1, blit=True)
+anim = animation.FuncAnimation(fig, update, frames=bubble_sort(generate_bars(99)), interval=1, blit=True)
 
 plt.title('Bubble Sort Visualization')
 plt.xlabel('Index')
