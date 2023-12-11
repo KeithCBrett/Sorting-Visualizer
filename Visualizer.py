@@ -21,7 +21,7 @@ def bubble_sort(input_list):
 
 # Initialize figure and axes
 fig, ax = plt.subplots()
-bars = ax.bar(range(len(generate_bars(99))), generate_bars(99-))
+bars = ax.bar(range(len(generate_bars(99))), generate_bars(99))
 
 
 # Function to update bars for each frame of the animation
@@ -40,5 +40,5 @@ plt.ylabel('Value')
 
 
 # Should save in the same folder visualizer is located in
-anim.save('sort.gif', writer='ffmpeg', fps=30)
+anim.save('bubblesort.gif', writer='ffmpeg', fps=30)
 # 60fps 2 min compile
