@@ -1,33 +1,44 @@
-# Import Matplotlib, this library has built-in functions for creating animations. We will be using it to draw the
-# sorting animation to the screen.
-# We will also import random so that we can mix up are bars so that they can be sorted.
-
-import matplotlib.pyplot
+import matplotlib.pyplot as plt
+import matplotlib.animation as animation
 import random
 
 
-# This function will generate a random set of bars to be sorted using matplotlib. The number of bars generated will be
-# equal to number_bar
+# Generate initial random bars
 def generate_bars(number_bars):
-    x = [*range(1, (number_bars + 1), 1)]
-    y = [*range(1, (number_bars + 1), 1)]
-    random.shuffle(x)
-    random.shuffle(y)
-    matplotlib.pyplot.bar(x, y)
-    matplotlib.pyplot.show()
+    return random.sample(range(1, 100), number_bars)  # Need to change this to make all values sequential eventually
 
 
+# Bubble sort algorithm
 def bubble_sort(input_list):
     list_length = len(input_list)
-    # Traverse through all list elements
     for i in range(list_length):
-        # When the last elements are in place we ignore them (list_length - i - 1)
-        for j in range(0, list_length - i - 1):
-            # Traverse the list from 0 to list_length-i-1, swap if the element found is greater than the next element
+        for j in range(0, list_length - i - 1):  # Excludes already sorted elements (rightmost sorted elements)
             if input_list[j] > input_list[j + 1]:
                 input_list[j], input_list[j + 1] = input_list[j + 1], input_list[j]
-                return input_list  # We will return only one iteration of the sort, so we can call this multiple times
-                # to act as our animation frames.
+                yield input_list  # Yield the updated list for animation. We us yield instead of return because it
+                # allows us to continue the sort at later time, doesn't return just one value.
 
 
-generate_bars(10)
+# Initialize figure and axes
+fig, ax = plt.subplots()
+bars = ax.bar(range(len(generate_bars(25))), generate_bars(25))
+
+
+# Function to update bars for each frame of the animation
+def update(input_list):
+    for bar, h in zip(bars, input_list): # Zip pairs the bars height to the values created in generate_bars
+        bar.set_height(h)  # Update each bar's height on screen (once called by FuncAnimation)
+    return bars
+
+
+# Create animation
+anim = animation.FuncAnimation(fig, update, frames=bubble_sort(generate_bars(25)), interval=1, blit=True)
+
+plt.title('Bubble Sort Visualization')
+plt.xlabel('Index')
+plt.ylabel('Value')
+
+
+# Should save in the same folder visualizer is located in
+anim.save('sort.gif', writer='ffmpeg', fps=30)
+# 60fps 2 min compile
