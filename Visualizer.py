@@ -5,7 +5,9 @@ import random
 
 # Generate initial random bars
 def generate_bars(number_bars):
-    return random.sample(range(1, 100), number_bars)  # Need to change this to make all values sequential eventually
+    olist = [i for i in range(1, (number_bars + 1))]
+    random.shuffle(olist)
+    return olist
 
 
 # Bubble sort algorithm
@@ -21,18 +23,18 @@ def bubble_sort(input_list):
 
 # Initialize figure and axes
 fig, ax = plt.subplots()
-bars = ax.bar(range(len(generate_bars(99))), generate_bars(99))
+bars = ax.bar(range(len(generate_bars(50))), generate_bars(50))
 
 
 # Function to update bars for each frame of the animation
 def update(input_list):
-    for bar, h in zip(bars, input_list): # Zip pairs the bars height to the values created in generate_bars
+    for bar, h in zip(bars, input_list):  # Zip pairs the bars height to the values created in generate_bars
         bar.set_height(h)  # Update each bar's height on screen (once called by FuncAnimation)
     return bars
 
 
 # Create animation
-anim = animation.FuncAnimation(fig, update, frames=bubble_sort(generate_bars(99)), interval=1, blit=True)
+anim = animation.FuncAnimation(fig, update, frames=bubble_sort(generate_bars(50)), interval=1, blit=True)
 
 plt.title('Bubble Sort Visualization')
 plt.xlabel('Index')
